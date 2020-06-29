@@ -1740,6 +1740,19 @@ class TestTypeCallable(ParserTestCase):
     ]
 
 
+class TestTypeBoolWarns(TestCase):
+    def test_warning_for_bool(self):
+        import warnings
+
+        parser = argparse.ArgumentParser()
+        with warnings.catch_warnings(record=True) as warning_list:
+            parser.add_argument('--flag', type=bool)
+
+        self.assertEqual(len(warning_list), 1)
+        warning = warning_list[0]
+        self.assertEqual(str(warning.message), 'Passing type=bool into add_argument is usually a mistake, all inputs will parse as True except empty string.')
+
+
 class TestTypeUserDefined(ParserTestCase):
     """Test a user-defined option/argument type"""
 

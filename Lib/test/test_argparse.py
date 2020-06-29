@@ -4878,7 +4878,7 @@ class TestMessageContentError(TestCase):
         parser = ErrorRaisingArgumentParser(prog='PROG', usage='')
         parser.add_argument('req_pos', type=str)
         parser.add_argument('--req_opt', type=int, required=True)
-        parser.add_argument('--opt_opt', type=bool, nargs='?',
+        parser.add_argument('--opt_opt', type=lambda s: s == "true", nargs='?',
                             default=True)
         with self.assertRaises(ArgumentParserError) as cm:
             parser.parse_args([])

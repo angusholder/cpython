@@ -1424,6 +1424,13 @@ class _ActionsContainer(object):
             raise ValueError('%r is a FileType class object, instance of it'
                              ' must be passed' % (type_func,))
 
+        if type_func is bool:
+            import warnings
+            warnings.warn(
+                "Passing type=bool into add_argument is usually a mistake, "
+                "all inputs will parse as True except empty string.",
+                RuntimeWarning, stacklevel=2)
+
         # raise an error if the metavar does not match the type
         if hasattr(self, "_get_formatter"):
             try:
